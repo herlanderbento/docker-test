@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  db_jobs_postgres:
+    image: postgres:9.4
+    container_name: micro-jobs-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME_JOBS}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - db_jobs_postgres:/var/lib/postgresql/data1
+
+  db_companies_postgres:
+    image: postgres:9.4
+    container_name: micro-companies-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME_COMPANIES}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT_COMPANIES}:${POSTGRES_PORT}"
+    volumes:
+      - db_companies_postgres:/var/lib/postgresql/data2
+
+  redis_db:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+
+volumes:
+  db_jobs_postgres:
+  db_companies_postgres:
+  cache:
+    driver: local

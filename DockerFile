@@ -1,0 +1,12 @@
+FROM node:18-alpine
+
+WORKDIR /usr/srs/app
+
+COPY package.json /usr/srs/app
+RUN npm install
+
+COPY . /usr/srs/app
+
+EXPOSE 3000
+
+CMD ["pnpm", "run", "dev"]
